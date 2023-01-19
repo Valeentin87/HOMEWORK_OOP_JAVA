@@ -6,6 +6,7 @@ public enum Commands {
     CREATE,
     UPDATE,
     LIST,
-    DELETE,
+    SEARCH,
+    NEWINTERFACE,
     EXIT
 }

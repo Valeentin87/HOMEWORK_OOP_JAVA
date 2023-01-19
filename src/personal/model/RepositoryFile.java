@@ -1,29 +1,33 @@
 package personal.model;
 
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RepositoryFile implements Repository {
-    private UserMapper mapper = new UserMapper();
-    private FileOperation fileOperation;
-
+public class RepositoryFile implements Repository { // класс файлы в репозитории
+    private UserMapper mapper = new UserMapper(); // поле, по умолчанию равно пустой карте пользователя
+    private FileOperation fileOperation; // поле, принимающее в себя интерфейс опреации над файлами
+    //конструктор, создающий репозиторий файлов с реализацией интерфейса, указанного в параметрах
     public RepositoryFile(FileOperation fileOperation) {
         this.fileOperation = fileOperation;
     }
-
+    // реализация метода получения всех пользователей
     @Override
     public List<User> getAllUsers() {
         List<String> lines = fileOperation.readAllLines();
+        //String newStrFile = lines.toString();
+        //String[] parsFile = newStrFile.;
         List<User> users = new ArrayList<>();
         for (String line : lines) {
-            users.add(mapper.map(line));
+            users.add(mapper.map(line)); // на основании каждой строки, полученной из считанного файла через мето map
+                                        // к листу пользователей добавляем нового, распарсенного через запятые
         }
         return users;
     }
-
+        // метод, позволяющий создать нового пользователя
     @Override
     public String CreateUser(User user) {
-
+        // сначала получаем всех пользователей, которые есть
         List<User> users = getAllUsers();
         int max = 0;
         for (User item : users) {
@@ -41,6 +45,11 @@ public class RepositoryFile implements Repository {
             lines.add(mapper.map(item));
         }
         fileOperation.saveAllLines(lines);
+
         return id;
     }
+
+
+
+
 }

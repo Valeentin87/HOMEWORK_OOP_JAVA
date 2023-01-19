@@ -1,8 +1,11 @@
 package personal.views;
 
 import personal.controllers.UserController;
+import personal.model.FileOperation;
+import personal.model.FileOperationImpl;
 import personal.model.User;
 
+import java.io.PrintWriter;
 import java.util.Scanner;
 
 public class ViewUser {
@@ -36,6 +39,32 @@ public class ViewUser {
                         throw new RuntimeException(e);
                     }
                     break;
+                case SEARCH:
+                    String name = prompt("Введите имя пользователя, которого ищите: ");
+                    String surname = prompt("Введите фамилию пользователя, которого ищите: ");
+                    try {
+                        String[] arr = new String[2];
+                        arr = userController.searchUser(name,surname);
+                        System.out.println("Пользователь " +name+" "+surname+" найден в справочнике под номером "+arr[0]+ " и имеет номер телефона "+arr[1]);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                    break;
+                case NEWINTERFACE:
+                    String newInterface = prompt("Введите название файла, в который хотите сохранить справочник в новом интерфейсе:  ");
+                    try {
+                        System.out.println(userController.newInterface());
+                        PrintWriter out = new PrintWriter(newInterface+".txt");
+                        out.println(userController.newInterface());
+
+
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                    break;
+
+
+
             }
         }
     }
